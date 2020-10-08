@@ -71,7 +71,7 @@ def predict_fn(input_data, model):
     #         data_len - The length of the review
 
     rewiews = review_to_words(input_data)
-    data_X, data_len = convert_and_pad_data(word_dict, rewiews)
+    data_X, data_len = convert_and_pad(model.word_dict, rewiews)
 
     # Using data_X and data_len we construct an appropriate input tensor. Remember
     # that our model expects input data of the form 'len, review[500]'.
@@ -89,6 +89,6 @@ def predict_fn(input_data, model):
     with torch.no_grad():        
         out = model.forward(data)
         
-    result = np.round(out.numpy())
+    result = np.round(out.numpy()).astype(int)
 
     return result
